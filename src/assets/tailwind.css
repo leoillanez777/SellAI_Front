@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+  .showSideBar {
+    @apply ml-72 ease-in duration-300;
+  }
+
+  .hideSideBar {
+    @apply ml-2 ease-in duration-700;
+  }
+
+  .h-screen-sm {
+    height: calc(100vh - 4rem);
+  }
+
+  .w-screen-md {
+    width: calc(100vw - 24rem);
+  }
+
+  .w-full-md {
+    width: calc(100% - 16rem);
+  }
+}
