@@ -4754,8 +4754,8 @@
   padding: 0.5rem 0.5rem;
   background: #ffffff;
   color: #6c6c6c;
-  border: 2px solid #ebebeb;
-  border-radius: 6px;
+  /* border: 2px solid #ebebeb; */
+  /* border-radius: 6px; */
   width: 12.5rem;
 }
 .p-menu .p-menuitem > .p-menuitem-content {

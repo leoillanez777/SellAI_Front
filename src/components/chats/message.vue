@@ -5,7 +5,7 @@
   import Avatar from 'primevue/avatar'
   import DataTable from 'primevue/datatable'
   import Column from 'primevue/column'
-  import logoBot from '@/assets/ai48.png'
+  import logoBot from '@/assets/svg/logo_only.svg'
 
   const props = defineProps({
     message: String,

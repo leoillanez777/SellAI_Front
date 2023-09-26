@@ -50,8 +50,8 @@
     </div>
 
     <!-- Section type message, send voices and text -->
-    <div class="fixed mr-0 md:mr-4 flex flex-row bottom-0 items-center rounded-xl" :class="{'w-full-md': storeSetting.showAside, 'w-full': !storeSetting.showAside}">
-      <div class="w-full mr-16 p-3 md:p-4 lg:p-6 flex flex-col sm:flex-row items-center mt-auto gap-3">
+    <div class="fixed right-0 mr-0 md:mr-2 flex flex-row bottom-0 items-center rounded-xl" :class="{'w-full-md': storeSetting.showAside, 'w-full': !storeSetting.showAside}">
+      <div class="w-full mr-8 p-3 md:p-4 lg:p-6 flex flex-col sm:flex-row items-center mt-auto gap-3">
         
         <InputText v-model="txtMsg" placeholder="Escribir un mensaje!" class="w-full" />
         

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center space-x-4 py-4 px-6 rounded-xl">
+  <div class="flex justify-center items-center space-x-4 py-4 px-6 rounded-xl">
     <!-- BUTTON RECORD / PAUSE -->
     <button type="button" @click.native="toggleRecording" :class="classIsRecording"
       class="rounded-full cursor-pointer border px-6 py-6 p-2.5 font-medium text-sm text-center inline-flex items-center
