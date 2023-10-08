@@ -19,7 +19,7 @@ import Tooltip from 'primevue/tooltip'
 import './assets/primevue' // get css of primevue
 
 // config axios
-axios.defaults.baseURL = 'https://localhost:7070/api/'
+axios.defaults.baseURL = 'http://127.0.0.1:8000/'
 
 // create vue app
 const app = createApp(App)

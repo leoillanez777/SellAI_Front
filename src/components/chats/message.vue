@@ -61,7 +61,7 @@
     <div class="flex items-end" :class="{'justify-end': !response}">
       <div :class="classObject" class="flex flex-col space-y-2 text-xs max-w-5xl mx-2">
         <div v-if="response" alert class="relative w-full p-4 mb-4 text-xl text-white border border-solid rounded-lg bg-gradient-to-tl from-[#35a4cc] to-cyan-500 border-cyan-200">
-          <VueWriter :array="[message]" :iterations='1' :typeSpeed="30" @finish="finishWrite"/>
+          <VueWriter :array="[message]" :iterations='1' :typeSpeed="1" @finish="finishWrite"/>
           <DataTable v-if="type==='table'" :value="table.rows" tableStyle="min-width: 50rem" showGridlines>
               <Column v-for="col of table.columns" :key="col.field" :field="col.field" :header="col.header"></Column>
           </DataTable>

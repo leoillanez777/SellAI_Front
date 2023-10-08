@@ -10,11 +10,11 @@ export default defineComponent({
     },
     eraseSpeed: {
       type: Number,
-      default: 100,
+      default: 100, // Reduce the default erasing speed
     },
     typeSpeed: {
       type: Number,
-      default: 200,
+      default: 200, // Reduce the default typing speed
     },
     delay: {
       type: Number,
