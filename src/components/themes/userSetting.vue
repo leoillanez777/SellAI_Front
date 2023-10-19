@@ -2,7 +2,7 @@
   import { ref } from 'vue'
   import Avatar from 'primevue/avatar'
   import Menu from 'primevue/menu'
-  import logoUser from '@/assets/svg/user.svg'
+  import logoUser from '@/assets/image/user.svg'
 
   const menuUser = ref()
 
@@ -38,7 +38,7 @@
 
 </script>
 <template>
-  <Avatar @click="toggleMenuUser" :image="logoUser" class="mr-2 hover:cursor-pointer" size="large" shape="circle" aria-haspopup="true" aria-controls="overlay_menuUser" />
+  <Avatar @click="toggleMenuUser" :image="logoUser" class="mr-2 hover:cursor-pointer" size="large" shape="circle" aria-haspopup="true" aria-controls="overlay_menuUser" />  
   <Menu ref="menuUser" id="overlay_menuUser" :model="items" :popup="true">
     <template #start>
       <button class="w-full text-left flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround">

@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 //Call routes
 import dashboardRoutes  from './dashboard.routes';
 //import articlesRoutes   from './articles.routes';
-//import adminRoutes      from './admin.routes';
+import adminRoutes      from './admin.routes';
 //import usersRoutes      from './users.routes';
 //End call routes
 
@@ -13,7 +13,7 @@ const router = createRouter({
   routes: [
     { ...dashboardRoutes },
   //  { ...articlesRoutes },
-  //  { ...adminRoutes },
+    { ...adminRoutes },
   //  { ...usersRoutes },
     // catch all redirect to home page
     { path: '/:pathMatch(.*)*', redirect: '/' }

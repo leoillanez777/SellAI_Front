@@ -8,7 +8,7 @@
   import switchTheme from '@/components/themes/switcher.vue'
   import userTheme from '@/components/themes/userSetting.vue'
   import Button from 'primevue/button'
-  import logoText from '@/assets/svg/vector.svg'
+  import logoText from 'svgfilepath/vector.svg'
 
   // //--------------------------------------------------- // //
   // // VARIABLE SECTOR
@@ -114,16 +114,17 @@
     ],
   },
   {
-    label: "Events",
+    label: "Opciones",
     icon: "pi pi-fw pi-calendar",
     items: [
       {
-        label: "Edit",
+        label: "Editar",
         icon: "pi pi-fw pi-pencil",
         items: [
           {
-            label: "Save",
+            label: "Intenciones",
             icon: "pi pi-fw pi-calendar-plus",
+            to: "admin/intents"
           },
           {
             label: "Delete",
@@ -185,7 +186,7 @@
     <Transition name="slide-fade">
       <aside v-if="storeSetting.showAside" class="fixed h-full w-64 top-0 left-0 flex flex-col border-r border-transparent border-solid shadow-2xl shadow-blue-500/50 bg-white dark:bg-slate-700">
         <div class="flex pt-8 pb-6 justify-center items-center">
-          <img alt="SellAI" :src="logoText" class="inline w-64 h-16" />
+          <icon :data="logoText" class="inline" width="16rem" height="4rem" original />
         </div>
         <div class="overflow-auto flex-1 pb-8 ml-0">  
           <PanelMenu :model="items"

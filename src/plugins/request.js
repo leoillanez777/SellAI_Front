@@ -19,19 +19,19 @@ export default class RequestService {
       const response = await this.axiosInstance.get(url);
       return response.data;
     } catch (error) {
-      // Handle error here.
+      // TODO: Handle error here
       throw error;
     }
   }
 
   async postMethod(url, data) {
     try {
-      const response = await this.axiosInstance.post(url, data);
+      const response = await this.axiosInstance.post(url, data)
       console.log("Response Post: ", response)
-      return response.data;
+      return response.data
     } catch (error) {
-      // Handle error here.
-      throw error;
+      // TODO: Handle error here
+      throw error
     }
   }
   
@@ -51,17 +51,18 @@ export default class RequestService {
       const response = await this.axiosInstance(config);
       return response.data;
     } catch (error) {
-      // Handle error here.
+      // TODO: Handle error here
       throw error;
     }
   }
 
   async putMethod(url, data) {
     try {
-      const response = await this.axiosInstance.put(url, data);
-      return response.data;
+      const response = await this.axiosInstance.put(url, data)
+      debugger
+      return response.data
     } catch (error) {
-      // Handle error here.
+      // TODO: Handle error here
       throw error;
     }
   }
@@ -71,7 +72,7 @@ export default class RequestService {
       const response = await this.axiosInstance.delete(`${url}/${id}`);
       return response.data;
     } catch (error) {
-      // Handle error here.
+      // TODO: Handle error here
       throw error;
     }
   }
