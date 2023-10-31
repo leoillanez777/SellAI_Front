@@ -27,7 +27,7 @@
     loading: false,
     loadingGrid: false,
     loadingCell: false,
-    blockedContent: false,
+    blockedContent: true,
     modalVisible: false
   })
 
@@ -52,7 +52,7 @@
   const userData = reactive({
     _id: null,
     name: null,
-    id_intent: null,
+    intent_id: null,
     intent: null,
     display: null,
     pdf: false,
@@ -60,7 +60,7 @@
     type: null,
     collection: '',
     message: '',
-    entities: []
+    entities: null
   })
 
   // Datatable
@@ -85,7 +85,7 @@
       console.log(sys_menuApi)
       
       userData._id = r._id ?? ''
-      userData.id_intent = r.id_intent ?? userData.intent.id
+      userData.intent_id = r.intent_id ?? userData.intent.id
       userData.name = userData.intent.name
       userData.display = r.display ?? ""
       userData.pdf = r.pdf ?? false
@@ -96,7 +96,7 @@
       userData.entities = r.entities ?? []
 
       load.loading = false
-      load.blocked = false
+      load.blockedContent = false
     }
   };
 
@@ -157,17 +157,23 @@
   }
 
   const newEntity = () => {
+    if (!userData.entities) {
+      userData.entities = []
+    }
     let copy = JSON.parse(JSON.stringify(defaultRow));
     userData.entities.push(copy);
   }
 
   const saveIntent = async () => {
     load.loading = load.blockedContent = load.loadingGrid = true
+
+    if (userData.entities) {
+      userData.entities = userData.entities.filter(element => {
+        return element.name && element.roles && element.roles.length > 0
+      })
+    }  
     
     const dataSave = JSON.stringify(userData)
-
-    console.log("DATA SAVE /////")
-    console.log(dataSave)
 
     let resultAPI
     if (userData._id === '') {
@@ -205,7 +211,7 @@
         </template>
       </Dropdown>
     </div>
-    <BlockUI :blocked="load.blocked">
+    <BlockUI :blocked="load.blockedContent">
       <div class="grid grid-cols-4 gap-4">
         <div class="col-span-4 sm:col-span-2">
           <label class="block text-sm font-medium leading-6 text-gray-900 dark:text-slate-400" for="tbPdf">Ver PDF:</label>
@@ -311,7 +317,7 @@
                 <!--          Message          -->
                 <template #body="slotProps">
                   <Skeleton v-if="load.loadingGrid"></Skeleton>
-                  <span v-else>{{ slotProps.data.alias }}</span>
+                  <span v-else>{{ slotProps.data.message }}</span>
                 </template>
                 <template #editor="{ data, field }">
                   <InputText type="text" v-model="data[field]" class="w-full" />
@@ -326,7 +332,7 @@
       
 
     <div class="sticky bottom-0 mt-4">
-      <Toolbar>
+      <Toolbar :pt="{root: 'bg-neutral-100 rounded-lg ring-offset-2 ring-2 dark:bg-stone-900' }">
         <template #center>          
           <Button label="Grabar" severity="warning" icon="pi pi-save" rounded @click="saveIntent" :disabled="load.blocked" :loading="load.loading" />
         </template>

@@ -59,7 +59,6 @@ export default class RequestService {
   async putMethod(url, data) {
     try {
       const response = await this.axiosInstance.put(url, data)
-      debugger
       return response.data
     } catch (error) {
       // TODO: Handle error here

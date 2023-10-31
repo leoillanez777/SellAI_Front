@@ -12,6 +12,7 @@
   
   const storeSetting = useSettingStore()
   const requestApi = new RequestService()
+  const loading = ref(false)
   const refScroller = ref() // Una referencia para controlar el panel de desplazamiento
   const refDivScroll = ref() // Una referencia para controlar el desplazamiento del panel
   const refOpAudio = ref() // Una referencia para controlar el panel de grabación de audio
@@ -46,11 +47,15 @@
 
   // Envia mensaje a Interpreter
   const sendMessage = async () => {
-    const msg = txtMsg.value; // Se obtiene el texto del mensaje
-    messages.value.push({ id: msgId.value++, message: txtMsg.value, response: false }); // Se agrega el mensaje a la lista de mensajes
-    txtMsg.value = ''; // Se borra el texto del mensaje
-    await nextTick(); // Se espera al siguiente ciclo de actualización (DOM)
-    refDivScroll.value.scrollIntoView(); // Se desplaza la vista hacia el final del chat
+    if (loading.value) {
+      return
+    }
+    loading.value = true
+    const msg = txtMsg.value // Se obtiene el texto del mensaje
+    messages.value.push({ id: msgId.value++, message: txtMsg.value, response: false }) // Se agrega el mensaje a la lista de mensajes
+    txtMsg.value = '' // Se borra el texto del mensaje
+    await nextTick() // Se espera al siguiente ciclo de actualización (DOM)
+    refDivScroll.value.scrollIntoView() // Se desplaza la vista hacia el final del chat
 
     // Se llama al método WebSocket para interpretar el mensaje
     let bodyMessage = {
@@ -63,36 +68,38 @@
     const responseApi = await requestApi.postMethod("interpreter/", bodyMessage)
     console.log("Respuesta API: ", responseApi)
     if (responseApi) {
-      const response = JSON.parse(responseApi.message);
+      loading.value = false
+      const response = JSON.parse(responseApi.message)
       console.log("JSON: ", response)
       // Para indicar que existe un contexto (intención)
       if (response.contexts) {
-        contextId.value = response.contexts.created ? "" : response.contexts.id;
-        contextDisplay.value = response.contexts.created ? "Sin Contexto" : response.contexts.context_display;
+        contextId.value = response.contexts.created ? "" : response.contexts.id
+        contextDisplay.value = response.contexts.created ? "Sin Contexto" : response.contexts.context_display
       }
 
       // Analiza la respuesta del mensaje
       if (response.messages && response.messages.length > 0) {
-        const idResponse = contextId.value || msgId.value++;
-        let msgResponse = "";
+        const idResponse = contextId.value || msgId.value++
+        let msgResponse = ""
         
         // Si la respuesta es una tabla, se guarda en una variable
         if (response.table && response.table.rows && response.table.rows.length > 0) {
-          typeMsg.value = "table";
-          tableMsg.value = response.table;
+          typeMsg.value = "table"
+          tableMsg.value = response.table
         }
 
         // Concatenar los mensajes usando join()
         if (Array.isArray(response.messages)) {
-          msgResponse = response.messages.join(" ");
+          msgResponse = response.messages.join(" ")
         }
 
         // Se agrega el mensaje de respuesta a la lista de mensajes
-        messages.value.push({ id: idResponse, message: msgResponse.trim(), response: true, context: contextDisplay.value });
-        await nextTick();
-        refDivScroll.value.scrollIntoView({behavior: 'smooth'}); // Se desplaza la vista hacia el final del chat
+        messages.value.push({ id: idResponse, message: msgResponse.trim(), response: true, context: contextDisplay.value })
+        await nextTick()
+        refDivScroll.value.scrollIntoView({behavior: 'smooth'}) // Se desplaza la vista hacia el final del chat
       }
     }
+    loading.value = false
   }
 </script>
 <template>
@@ -115,13 +122,13 @@
             <Button severity="secondary" text aria-label="Cleaner" v-tooltip.top="'Nueva conversación'">
               <icon :data="logoClean" width="1.5rem" height="1.5rem" original />
             </Button>
-            <InputText v-model.trim="txtMsg" v-on:keyup.enter="sendMessage" placeholder="Escribir un mensaje!" class="w-full" autofocus />
+            <InputText v-model.trim="txtMsg" v-on:keyup.enter="sendMessage" placeholder="Escribir un mensaje!" class="w-full" autofocus :disabled="loading" />
         </div>
         
         <div class="flex w-full sm:w-auto gap-3">
           
           <!-- Section buttons -->
-          <Button @click="toggleAudio" severity="info" class="p-button-sm md:p-button-lg justify-center" aria-haspopup="true" aria-controls="overlay_panel">
+          <Button @click="toggleAudio" :loading="loading" severity="info" class="p-button-sm md:p-button-lg justify-center" aria-haspopup="true" aria-controls="overlay_panel">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
             </svg>
@@ -130,7 +137,7 @@
             <Recorder @send-audio="callbackAudio"/>
           </OverlayPanel>
 
-          <Button severity="info" class="w-full sm:w-auto" v-on:click="sendMessage">
+          <Button severity="info" class="w-full sm:w-auto" v-on:click="sendMessage" :loading="loading">
             <span class="p-button-icon p-button-icon-right pi pi-send" data-pc-section="icon"></span>
             <span class="p-button-label" data-pc-section="label">Enviar</span>
           </Button>

@@ -8,7 +8,7 @@
   import switchTheme from '@/components/themes/switcher.vue'
   import userTheme from '@/components/themes/userSetting.vue'
   import Button from 'primevue/button'
-  import logoText from 'svgfilepath/vector.svg'
+  import logoText from 'svgfilepath/codeloom.svg'
 
   // //--------------------------------------------------- // //
   // // VARIABLE SECTOR
@@ -17,133 +17,138 @@
   const storeSetting = useSettingStore()
   const storeAlert = useAlertStore()
   const items = ref([
-  {
-    label: "File",
-    icon: "pi pi-fw pi-file",
-    items: [
-      {
-        label: "Nuevo",
-        icon: "pi pi-fw pi-plus",
-        items: [
-          {
-            label: "Bookmark",
-            icon: "pi pi-fw pi-bookmark",
-            command: () => {
-              storeAlert.toastAlert("Bookmark - Panel Menu", "success")
-            }
-          },
-          {
-            label: "Video",
-            icon: "pi pi-fw pi-video",
-            command: () => {
-              storeAlert.toastAlert("No video - Panel Menu", "error")
-            }
-          },
-        ],
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-fw pi-trash",
-        command: () => {
-          storeAlert.toastAlert("Borrar - Panel Menu", "info")
-        }
-      },
-      {
-        label: "Export",
-        icon: "pi pi-fw pi-external-link",
-        command: () => {
-          storeAlert.toastAlert("Exportar - Panel Menu", "warn")
-        }
-      },
-    ],
-  },
-  {
-    label: "Edit",
-    icon: "pi pi-fw pi-pencil",
-    items: [
-      {
-        label: "Left",
-        icon: "pi pi-fw pi-align-left",
-      },
-      {
-        label: "Right",
-        icon: "pi pi-fw pi-align-right",
-      },
-      {
-        label: "Center",
-        icon: "pi pi-fw pi-align-center",
-      },
-      {
-        label: "Justify",
-        icon: "pi pi-fw pi-align-justify",
-      },
-    ],
-  },
-  {
-    label: "Users",
-    icon: "pi pi-fw pi-user",
-    items: [
-      {
-        label: "New",
-        icon: "pi pi-fw pi-user-plus",
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-fw pi-user-minus",
-      },
-      {
-        label: "Search",
-        icon: "pi pi-fw pi-users",
-        items: [
-          {
-            label: "Filter",
-            icon: "pi pi-fw pi-filter",
-            items: [
-              {
-                label: "Print",
-                icon: "pi pi-fw pi-print",
-              },
-            ],
-          },
-          {
-            icon: "pi pi-fw pi-bars",
-            label: "List",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Opciones",
-    icon: "pi pi-fw pi-calendar",
-    items: [
-      {
-        label: "Editar",
-        icon: "pi pi-fw pi-pencil",
-        items: [
-          {
-            label: "Intenciones",
-            icon: "pi pi-fw pi-calendar-plus",
-            to: "admin/intents"
-          },
-          {
-            label: "Delete",
-            icon: "pi pi-fw pi-calendar-minus",
-          },
-        ],
-      },
-      {
-        label: "Archieve",
-        icon: "pi pi-fw pi-calendar-times",
-        items: [
-          {
-            label: "Remove",
-            icon: "pi pi-fw pi-calendar-minus",
-          },
-        ],
-      },
-    ],
-  },
+    {
+      label: 'Home',
+      icon: 'pi pi-fw pi-home',
+      to: "/home"
+    },
+    {
+      label: "File",
+      icon: "pi pi-fw pi-file",
+      items: [
+        {
+          label: "Nuevo",
+          icon: "pi pi-fw pi-plus",
+          items: [
+            {
+              label: "Bookmark",
+              icon: "pi pi-fw pi-bookmark",
+              command: () => {
+                storeAlert.toastAlert("Bookmark - Panel Menu", "success")
+              }
+            },
+            {
+              label: "Video",
+              icon: "pi pi-fw pi-video",
+              command: () => {
+                storeAlert.toastAlert("No video - Panel Menu", "error")
+              }
+            },
+          ],
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-fw pi-trash",
+          command: () => {
+            storeAlert.toastAlert("Borrar - Panel Menu", "info")
+          }
+        },
+        {
+          label: "Export",
+          icon: "pi pi-fw pi-external-link",
+          command: () => {
+            storeAlert.toastAlert("Exportar - Panel Menu", "warn")
+          }
+        },
+      ],
+    },
+    {
+      label: "Edit",
+      icon: "pi pi-fw pi-pencil",
+      items: [
+        {
+          label: "Left",
+          icon: "pi pi-fw pi-align-left",
+        },
+        {
+          label: "Right",
+          icon: "pi pi-fw pi-align-right",
+        },
+        {
+          label: "Center",
+          icon: "pi pi-fw pi-align-center",
+        },
+        {
+          label: "Justify",
+          icon: "pi pi-fw pi-align-justify",
+        },
+      ],
+    },
+    {
+      label: "Users",
+      icon: "pi pi-fw pi-user",
+      items: [
+        {
+          label: "New",
+          icon: "pi pi-fw pi-user-plus",
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-fw pi-user-minus",
+        },
+        {
+          label: "Search",
+          icon: "pi pi-fw pi-users",
+          items: [
+            {
+              label: "Filter",
+              icon: "pi pi-fw pi-filter",
+              items: [
+                {
+                  label: "Print",
+                  icon: "pi pi-fw pi-print",
+                },
+              ],
+            },
+            {
+              icon: "pi pi-fw pi-bars",
+              label: "List",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Opciones",
+      icon: "pi pi-fw pi-calendar",
+      items: [
+        {
+          label: "Editar",
+          icon: "pi pi-fw pi-pencil",
+          items: [
+            {
+              label: "Intenciones",
+              icon: "pi pi-fw pi-calendar-plus",
+              to: "admin/intents"
+            },
+            {
+              label: "Delete",
+              icon: "pi pi-fw pi-calendar-minus",
+            },
+          ],
+        },
+        {
+          label: "Archieve",
+          icon: "pi pi-fw pi-calendar-times",
+          items: [
+            {
+              label: "Remove",
+              icon: "pi pi-fw pi-calendar-minus",
+            },
+          ],
+        },
+      ],
+    },
   ])
   // --------------------------------------------------- //
   // functions sectors
@@ -186,7 +191,7 @@
     <Transition name="slide-fade">
       <aside v-if="storeSetting.showAside" class="fixed h-full w-64 top-0 left-0 flex flex-col border-r border-transparent border-solid shadow-2xl shadow-blue-500/50 bg-white dark:bg-slate-700">
         <div class="flex pt-8 pb-6 justify-center items-center">
-          <icon :data="logoText" class="inline" width="16rem" height="4rem" original />
+          <icon :data="logoText" class="inline" width="64rem" height="4rem" original />
         </div>
         <div class="overflow-auto flex-1 pb-8 ml-0">  
           <PanelMenu :model="items"
