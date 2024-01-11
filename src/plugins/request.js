@@ -31,7 +31,7 @@ export default class RequestService {
       return response.data
     } catch (error) {
       // TODO: Handle error here
-      throw error
+      console.error(error)
     }
   }
   

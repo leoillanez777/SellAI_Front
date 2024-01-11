@@ -4,7 +4,13 @@ export const useAlertStore = defineStore('alert', {
   state: () => ({
     alert: [],
     count: 0,
-    random: false
+    random: false,
+    summaryMap: {
+      'success': 'Exitoso', 
+      'info': 'Información', 
+      'warn': 'Atención', 
+      'error': 'Error'
+    }
   }),
   actions: {
     /**
@@ -16,17 +22,16 @@ export const useAlertStore = defineStore('alert', {
      * @param {string} message - Message to show
      * @param {'success' | 'info' | 'warn' | 'error'} severity - Type of message (success, info, warn, error)
      */
-    toastAlert(msg, severity) {
+    toastAlert(msg, severity, seconds = 3, summary) {
       let _id = "", _t = this
       if (_t.count > 10) { _t.clear() }
 
       if (_t.random) { _id = `id_${Math.random().toString(36).substring(2)}` }
       else { _id = `id_${_t.count++}` }
-
-      const typeSummaryMap = { "success": "Exitoso", "info": "Información", "warn": "Atención", "error": "Error"}
-      const summary = typeSummaryMap[severity] || "Mensaje"
       
-      _t.alert.push({ msg, severity, id: _id, read: false, summary })
+      summary = summary || _t.summaryMap[severity] || "Mensaje"
+      const life = seconds * 1000
+      _t.alert.push({ msg, severity, id: _id, read: false, summary, life})
     },
     /**
      * @description the alert is marked as read
@@ -48,11 +53,12 @@ export const useAlertStore = defineStore('alert', {
       this.alert = []
       this.random = random || false
     },
-    exception(ex) {
+    exception(ex, seconds = 3) {
       let t = this
       if (ex.response && ex.response.data) {
         if (ex.response.data.Error) {
           ex.response.data.Error.forEach(e => {
+            debugger
             t.error(e)
           });
         }
@@ -60,28 +66,28 @@ export const useAlertStore = defineStore('alert', {
           const originalText = ex.response.data
           const index = originalText.indexOf("\n")
           const extractedText = originalText.substring(0, index)
-          t.toastAlert(extractedText, 'warn')
+          t.toastAlert(extractedText, 'warn', seconds)
           }
         else if (ex.response.status === 500) {
-          this.toastAlert('Error en el servidor!', 'warn')
+          this.toastAlert('Error en el servidor!', 'warn', seconds)
         }
         else {
-          t.toastAlert(ex.response.toJSON(), 'error')
+          t.toastAlert(ex.response.toJSON(), 'error', seconds)
         }
       } 
       else if (ex.request) {
         if (ex.message && ex.message == "Network Error") {
-          t.toastAlert("Sin conexión con el servidor", 'warn')
+          t.toastAlert("Sin conexión con el servidor", 'warn', seconds)
         }
         else {
-          t.toastAlert(ex.request, 'error')
+          t.toastAlert(ex.request, 'error', seconds)
         }
       } 
       else if (ex.message) {
-        t.toastAlert(ex.message, 'error')
+        t.toastAlert(ex.message, 'error', seconds)
       }
       else {
-        t.toastAlert(ex.toJSON(), 'error')
+        t.toastAlert(ex.toJSON(), 'error', seconds)
       }
     }
   }

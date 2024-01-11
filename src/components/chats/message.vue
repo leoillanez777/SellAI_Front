@@ -6,7 +6,7 @@
   import DataTable from 'primevue/datatable'
   import Tag from 'primevue/tag'
   import Column from 'primevue/column'
-  import logoBot from 'svgfilepath/logo_only.svg'
+  import logoBot from 'svgfilepath/cloom-logo.svg'
 
   const props = defineProps({
     message: String,

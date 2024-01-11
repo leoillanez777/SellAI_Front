@@ -1,28 +1,28 @@
 <script setup>
-  import { ref, nextTick } from 'vue'
-  import { useSettingStore } from '@/data'
-  import InputText from 'primevue/inputtext'
-  import Button from 'primevue/button'
-  import OverlayPanel from 'primevue/overlaypanel';
-  import Msg from '../components/chats/message.vue'
-  import Recorder from '../components/audio/recorder.vue'
-  import RequestService from '../plugins/request';
+  import { ref, nextTick }    from 'vue'
+  import { useSettingStore }  from '@/data'
+  import InputText            from 'primevue/inputtext'
+  import Button               from 'primevue/button'
+  import OverlayPanel         from 'primevue/overlaypanel';
+  import Msg                  from '../components/chats/message.vue'
+  import Recorder             from '../components/audio/recorder.vue'
+  import RequestService       from '../plugins/request';
 
-  import logoClean from 'svgfilepath/cleaner.svg'
+  import logoClean            from 'svgfilepath/cleaner.svg'
   
-  const storeSetting = useSettingStore()
-  const requestApi = new RequestService()
-  const loading = ref(false)
-  const refScroller = ref() // Una referencia para controlar el panel de desplazamiento
-  const refDivScroll = ref() // Una referencia para controlar el desplazamiento del panel
-  const refOpAudio = ref() // Una referencia para controlar el panel de grabación de audio
-  const messages = ref([{id: -1, message: 'Hola...si necesitas ayuda escribe: "Ayuda"', response: true}]) // Almacena los mensajes en el chat
-  const typeMsg = ref("") // Tipo de mensaje (texto o tabla)
-  const tableMsg = ref([]) // Para almacenar los datos de una tabla
-  const txtMsg = ref('') // Texto del mensaje que se está escribiendo
-  const msgId = ref(0); // Una referencia para el ID de cada mensaje
-  const contextId = ref('') // Para identificar si el primer mensaje.
-  const contextDisplay = ref('Sin Contexto') // Para identificar el contexto de los mensajes.
+  const storeSetting    = useSettingStore()
+  const requestApi      = new RequestService()
+  const loading         = ref(false)
+  const refScroller     = ref() // Una referencia para controlar el panel de desplazamiento
+  const refDivScroll    = ref() // Una referencia para controlar el desplazamiento del panel
+  const refOpAudio      = ref() // Una referencia para controlar el panel de grabación de audio
+  const messages        = ref([{id: -1, message: 'Hola...si necesitas ayuda escribe: "Ayuda"', response: true}]) // Almacena los mensajes en el chat
+  const typeMsg         = ref("") // Tipo de mensaje (texto o tabla)
+  const tableMsg        = ref([]) // Para almacenar los datos de una tabla
+  const txtMsg          = ref('') // Texto del mensaje que se está escribiendo
+  const msgId           = ref(0); // Una referencia para el ID de cada mensaje
+  const contextId       = ref('') // Para identificar si el primer mensaje.
+  const contextDisplay  = ref('Sin Contexto') // Para identificar el contexto de los mensajes.
 
   // //--------------------------------------------------- // //
   // // SECTOR FUNCTION
