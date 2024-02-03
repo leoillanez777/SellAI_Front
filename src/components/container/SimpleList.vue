@@ -15,7 +15,7 @@
   const reqApi = new RequestService()
   const props = defineProps({
     title:      { type: String, required: true },
-    columns:    { type: Array, required: true },
+    columns:    { type: Array,  required: true },
     nameMethod: { type: String, required: true },
     editFields: { type: Array }
   })
@@ -76,6 +76,7 @@
     loading.value = true
     try {
       const apiData = await reqApi.getMethod(props.nameMethod)
+      console.log('resultado: ', apiData)
       if (apiData.success) {
         dataModel.value = apiData.result
       }
@@ -87,15 +88,9 @@
     } catch (error) {
       alertStore.exception(error)
     }
-    
-    wsProp.getMethod(props.nameMethod).then(data => {
-      dataModel.value = data
+    finally {
       loading.value = false
-    }).catch(ex => {
-      loading.value = false
-      alertStore.clear()
-      alertStore.exception(ex)
-    });
+    }
   }
 
   const functionRefs = (el, id) => {
@@ -104,9 +99,27 @@
 
   // highlight search with red color
   const highlightMatches = (data, ...args) => {
-    const text = data?.[args[0]]?.[args[1]]?.[args[2]]
-      
+    let text = ''
+    switch (args.length) {
+      case 1:
+        text = data[args[0]]
+        break
+      case 2:
+        if (data[args[0]])
+          text = data[args[0]][args[1]]
+        break
+      case 3:
+        if (data[args[0]] && data[args[0]][args[1]])
+          text = data[args[0]][args[1]][args[2]]
+        break
+      case 4:
+        if (data[args[0]] && data[args[0]][args[1]] && data[args[0]][args[1]][args[2]])
+          text = data[args[0]][args[1]][args[2]][args[3]]
+        break
+    }
+    
     if (!filters.value["global"].value) return text
+    
     const matchExists = text.toLowerCase().includes(filters.value["global"].value.toLowerCase())
     if (!matchExists) return text
 
@@ -214,7 +227,6 @@
 
 <template>
   <div class="relative">
-    <Toast />
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
@@ -230,6 +242,7 @@
 
       <DataTable ref="dt" :value="dataModel" v-model:selection="selectedDatas" dataKey="id" :paginator="true" 
         :rows="10" :filters="filters" class="p-datatable-sm" showGridlines :loading="loading"
+        :globalFilterFields="[]"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
         :rowsPerPageOptions="[5,10,25]" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}" responsiveLayout="scroll">
         
@@ -238,7 +251,7 @@
             <h5 class="mb-2 md:m-0 p-as-md-center">
               Listado de {{ titleView }}
             </h5>
-            <span class="p-input-icon-left">
+            <span class="p-input-icon-left ml-3">
               <i class="pi pi-search" />
               <InputText v-model="filters['global'].value" placeholder="Buscar..." />
             </span>
@@ -301,7 +314,7 @@
     </Dialog>
 
     <Dialog :header="titleView" v-model:visible="dataDialog" :breakpoints="{'960px': '100vw'}" :style="{width: '75vw'}" :maximizable="true" :modal="true">
-      <EditList @closeModal="setModal" :info="dataOnly" :fieldsEd="fieldsEdit" :WService="refWs" :nameMethod="methodName" />
+      <!-- <EditList @closeModal="setModal" :info="dataOnly" :fieldsEd="fieldsEdit" :WService="refWs" :nameMethod="methodName" /> -->
     </Dialog>
   </div>
 </template>

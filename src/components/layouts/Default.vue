@@ -1,14 +1,14 @@
 <script setup>
-  import { ref, onMounted, watch } from 'vue'
-  import { default as router } from '@/routers'
+  import { ref, onMounted, watch }          from 'vue'
+  import { default as router }              from '@/routers'
   import { useSettingStore, useAlertStore } from '@/data'
-  import PanelMenu from 'primevue/panelmenu';
-  import Toast from 'primevue/toast'
-  import { useToast } from "primevue/usetoast"
-  import switchTheme from '@/components/themes/switcher.vue'
-  import userTheme from '@/components/themes/userSetting.vue'
-  import Button from 'primevue/button'
-  import logoText from 'svgfilepath/codeloom.svg'
+  import PanelMenu                          from 'primevue/panelmenu';
+  import Toast                              from 'primevue/toast'
+  import { useToast }                       from "primevue/usetoast"
+  import switchTheme                        from '@/components/themes/switcher.vue'
+  import userTheme                          from '@/components/themes/userSetting.vue'
+  import Button                             from 'primevue/button'
+  import logoText                           from 'svgfilepath/codeloom.svg'
 
   // //--------------------------------------------------- // //
   // // VARIABLE SECTOR
@@ -23,127 +23,101 @@
       to: "/home"
     },
     {
-      label: "File",
-      icon: "pi pi-fw pi-file",
+      label: 'Facturar',
+      icon: 'pi pi-fw pi-file-pdf',
       items: [
         {
-          label: "Nuevo",
-          icon: "pi pi-fw pi-plus",
-          items: [
-            {
-              label: "Bookmark",
-              icon: "pi pi-fw pi-bookmark",
-              command: () => {
-                storeAlert.toastAlert("Bookmark - Panel Menu", "success")
-              }
-            },
-            {
-              label: "Video",
-              icon: "pi pi-fw pi-video",
-              command: () => {
-                storeAlert.toastAlert("No video - Panel Menu", "error")
-              }
-            },
-          ],
+          label: 'Nueva Factura',
+          icon: 'pi pi-fw pi-plus',
+          to: '/newInvoice'
         },
         {
-          label: "Delete",
-          icon: "pi pi-fw pi-trash",
-          command: () => {
-            storeAlert.toastAlert("Borrar - Panel Menu", "info")
-          }
+          label: 'Mis facturas', 
+          icon: 'pi pi-fw pi-copy',
+          to: '/myInvoices'
         },
         {
-          label: "Export",
-          icon: "pi pi-fw pi-external-link",
-          command: () => {
-            storeAlert.toastAlert("Exportar - Panel Menu", "warn")
-          }
-        },
-      ],
+          label: 'Parametros',
+          icon:'pi pi-fw pi-wrench',
+          items:[
+            {
+              label:"Tipos de IVA",
+              icon: 'pi pi-fw pi-percentage',
+              to:'/taxType'
+            }
+          ]
+        }
+      ]
     },
     {
-      label: "Edit",
-      icon: "pi pi-fw pi-pencil",
-      items: [
+      label: 'Productos',
+      icon: 'pi pi-fw pi-box',
+      items:[
         {
-          label: "Left",
-          icon: "pi pi-fw pi-align-left",
+          label:'Agregar Producto',
+          icon: 'pi pi-fw pi-plus',
+          to:"/addProduct",
         },
         {
-          label: "Right",
-          icon: "pi pi-fw pi-align-right",
+          label:'Ver Inventario',
+          icon: 'pi pi-fw pi-chart-bar',
+          to:"/inventory"
         },
         {
-          label: "Center",
-          icon: "pi pi-fw pi-align-center",
-        },
-        {
-          label: "Justify",
-          icon: "pi pi-fw pi-align-justify",
-        },
-      ],
+          label: 'Parametros',
+          icon: 'pi pi-fw pi-wrench',
+          items: [
+            {label: 'Categorías', to:'/articles/category', icon: 'pi pi-fw pi-tags'},
+            {label: 'Marcas', to:'/articles/brand', icon: 'pi pi-fw pi-server'},
+          ]
+        }
+      ]
     },
     {
-      label: "Users",
-      icon: "pi pi-fw pi-user",
+      label: 'Personas',
+      icon: 'pi pi-fw pi-user',
       items: [
-        {
-          label: "New",
-          icon: "pi pi-fw pi-user-plus",
+        { 
+          label: 'Clientes',
+          icon: 'pi pi-fw pi-users',
+          to:'/customers'
         },
         {
-          label: "Delete",
-          icon: "pi pi-fw pi-user-minus",
+          label: 'Proveedores',
+          icon: 'pi pi-fw pi-cart-plus',
+          to: '/providers'
         },
         {
-          label: "Search",
-          icon: "pi pi-fw pi-users",
-          items: [
-            {
-              label: "Filter",
-              icon: "pi pi-fw pi-filter",
-              items: [
-                {
-                  label: "Print",
-                  icon: "pi pi-fw pi-print",
-                },
-              ],
-            },
-            {
-              icon: "pi pi-fw pi-bars",
-              label: "List",
-            },
-          ],
-        },
-      ],
+          label: 'Usuarios',
+          icon: 'pi pi-fw pi-user'
+        }
+      ]
     },
     {
       label: "Opciones",
-      icon: "pi pi-fw pi-calendar",
+      icon: "pi pi-fw pi-cog",
       items: [
         {
-          label: "Editar",
-          icon: "pi pi-fw pi-pencil",
+          label: "Intenciones",
+          icon: "pi pi-fw pi-info-circle",
           items: [
             {
-              label: "Intenciones",
-              icon: "pi pi-fw pi-calendar-plus",
+              label: "Editar",
+              icon: "pi pi-fw pi-pencil",
               to: "admin/intents"
-            },
-            {
-              label: "Delete",
-              icon: "pi pi-fw pi-calendar-minus",
             },
           ],
         },
         {
-          label: "Archieve",
-          icon: "pi pi-fw pi-calendar-times",
+          label: "Lenguaje",
+          icon: "pi pi-fw pi-language",
           items: [
             {
-              label: "Remove",
-              icon: "pi pi-fw pi-calendar-minus",
+              label: "Editar",
+              icon: "pi pi-fw pi-pencil",
+              command: () => {
+                storeAlert.toastAlert("Editar Lenguaje", "success")
+              }
             },
           ],
         },
